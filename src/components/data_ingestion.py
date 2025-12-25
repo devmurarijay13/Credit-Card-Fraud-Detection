@@ -6,6 +6,7 @@ import pandas as pd
 from sklearn.model_selection import StratifiedKFold,train_test_split
 from dataclasses import dataclass
 from src.components.data_transformation import DataTransformation,DataTransformationConfig
+from src.components.model_trainer import ModelTrainer,ModelTrainerConfig
 
 @dataclass
 class DataIngestionConfig:
@@ -20,6 +21,7 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         try:
             df = pd.read_csv('notebook/data/creditcard.csv')
+
             logging.info('read the data as dataframe')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)
@@ -34,7 +36,7 @@ class DataIngestion:
                 test_size=0.2,
                 stratify=df["Class"]
                 )
-            
+
             train_set.to_csv(self.ingestion_config.train_data_path,index=False,header=True)
             test_set.to_csv(self.ingestion_config.test_data_path,index=False,header=True)
             logging.info("completed the data ingestion")
@@ -52,4 +54,7 @@ if __name__=="__main__":
     train_data,test_data = di_obj.initiate_data_ingestion()
 
     data_transformation = DataTransformation()
-    data_transformation.initiate_data_transformation(train_data,test_data)
+    train_arr,test_arr,_ = data_transformation.initiate_data_transformation(train_data,test_data)
+
+    model_trainer = ModelTrainer()
+    print(model_trainer.train_and_evaluate(train_arr=train_arr,test_arr=test_arr))
