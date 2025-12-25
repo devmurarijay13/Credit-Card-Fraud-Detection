@@ -18,6 +18,11 @@ app = FastAPI(title="Credit Card Fraud Detection API")
 class Transaction(BaseModel):
     data: dict   # { "V1": value, "V2": value, ..., "Amount": value }
 
+
+@app.get("/")
+def home():
+    return {"status": "API is running"}
+
 ##prediction endpoint
 @app.post("/predict")
 def predict_fraud(transaction: Transaction):
