@@ -27,10 +27,6 @@ class Transaction(BaseModel):
 def home():
     return {"status": "API is running"}
 
-@app.get("/health")
-def health():
-    return {"status": "ok"}
-
 ##prediction endpoint
 @app.post("/predict")
 def predict_fraud(transaction: Transaction):
@@ -44,7 +40,7 @@ def predict_fraud(transaction: Transaction):
         prediction = int(prob >= threshold)
 
         logging.info(f"Prediction made: {prediction[0]}")
-        return {
+        return {    
             "fraud_probability": round(float(prob), 4),
             "is_fraud": prediction
         }

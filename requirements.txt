@@ -1,9 +1,10 @@
-numpy
-pandas
-scikit-learn
-matplotlib
-seaborn
-xgboost
 dill
+joblib
+
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.6.1
+xgboost==2.0.3
 fastapi
 uvicorn
+joblib
