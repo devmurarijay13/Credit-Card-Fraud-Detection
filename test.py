@@ -18,3 +18,4 @@ df.drop(columns=['Class'])
 
 with open('artifacts/features.pkl','wb') as f:
     pickle.dump(df.columns.to_list(),f)
+print(df.columns)
